@@ -80,9 +80,9 @@ with open(csv_file_path, "w") as csv_file:
     for date in dates:
         writer.writerow({
             'stock_symbol' : symbol,
-            'time_stamp': request_time, 
-            'open' : latest_open, 
-            'recent_high' : highest_price, 
-            'recent_low': lowest_price, 
-            'close' : latest_close, 
-            'volume': latest_volume})
+            'time_stamp': date, 
+            'open' : tsd[date]['1. open'], 
+            'recent_high' : tsd[date]['2. high'], 
+            'recent_low': tsd[date]['3. low'], 
+            'close' : tsd[date]['4. close'], 
+            'volume': tsd[date]['5. volume']})
