@@ -4,14 +4,17 @@ from dotenv import load_dotenv
 import json
 import pandas as pd 
 
-
 load_dotenv()
 
 ALPHAVANTAGE_API_KEY = os.environ.get('ALPHAVANTAGE_API_KEY', 'Oh no you should fix the api key')
 
+base_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='
+symbol = input('give me a ticker mofo ')
+key = '&apikey=' + ALPHAVANTAGE_API_KEY
 
-request_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo'
+# request_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo'
 
+request_url = base_url + symbol + key
 
 
 response = requests.get(request_url)
@@ -20,8 +23,6 @@ print (response.status_code)
 print(response.text)
 
 parsed_response = json.loads(response.text)
-
-breakpoint()
 
 quit()
 
