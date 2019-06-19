@@ -25,20 +25,24 @@ while flag == False:
     elif len(symbol) > 5: # 5 so you could also look up etfs and other traded funds :)
         print ('That is a little too long for a ticker')
     else:
-        flag = True
+        request_url = base_url + symbol + key
+        response = requests.get(request_url)
+        if response.status_code == 200:
+            symbol = symbol.upper()
+            flag = True
+        else:
+            print("Something isn't quite right can you pick another symbol?")
 
-
-
-request_url = base_url + symbol + key
-
-
-response = requests.get(request_url)
-# print(type(response))
-# print (response.status_code)
-# print(response.text)
 
 parsed_response = json.loads(response.text)
 request_time = datetime.datetime.now().strftime("%b %d %Y %H:%M:%S")
+
+try:
+    parsed_response['Time Series (Daily)']
+except:
+    print('Oh no, something is wrong. Can we start over?')
+    print('Shutting program down...')
+    exit()
 
 tsd = parsed_response['Time Series (Daily)']
 dates = list(tsd.keys())
@@ -51,18 +55,23 @@ latest_volume = tsd[latest_day]['5. volume']
 
 high_list = []
 low_list = []
+if len(dates) > 100:
+    for date in range(0,100):
+        high_list.append(float(tsd[date]['2. high']))
+else:
+    for date in dates:
+        high_list.append(float(tsd[date]['2. high']))
+
 for date in dates:
-    high_list.append(float(tsd[date]['2. high']))
+    # high_list.append(float(tsd[date]['2. high']))
     low_list.append(float(tsd[date]['3. low']))
-
-
-
 
 highest_price = max(high_list)
 lowest_price = min(low_list)
 
+### recommendation
 
-# breakpoint()
+
 
 print("-------------------------")
 print(f"SELECTED SYMBOL: {symbol}")
