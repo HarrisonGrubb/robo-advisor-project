@@ -14,8 +14,19 @@ load_dotenv()
 ALPHAVANTAGE_API_KEY = os.environ.get('ALPHAVANTAGE_API_KEY', 'Oh no you should fix the api key')
 
 base_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='
-symbol = input('give me a ticker mofo ')
 key = '&apikey=' + ALPHAVANTAGE_API_KEY
+
+flag = False
+
+while flag == False:
+    symbol = input('Please input a stock symbol ')
+    if symbol.isdigit() == True:
+        print('No numbers please')
+    elif len(symbol) > 5: # 5 so you could also look up etfs and other traded funds :)
+        print ('That is a little too long for a ticker')
+    else:
+        flag = True
+
 
 
 request_url = base_url + symbol + key
@@ -72,7 +83,7 @@ print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
 
-csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", 'data.csv')
+csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", f'{symbol}.data.csv')
 
 with open(csv_file_path, "w") as csv_file:
     writer = csv.DictWriter(csv_file, fieldnames = ['stock_symbol', 'time_stamp', 'open', 'recent_high', 'recent_low', 'close', 'volume'])
