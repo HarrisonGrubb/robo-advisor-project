@@ -1,4 +1,29 @@
-# app/robo_advisor.py
+import requests
+import os
+from dotenv import load_dotenv
+import json
+import pandas as pd 
+
+
+load_dotenv()
+
+ALPHAVANTAGE_API_KEY = os.environ.get('ALPHAVANTAGE_API_KEY', 'Oh no you should fix the api key')
+
+
+request_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo'
+
+
+
+response = requests.get(request_url)
+print(type(response))
+print (response.status_code)
+print(response.text)
+
+parsed_response = json.loads(response.text)
+
+breakpoint()
+
+quit()
 
 print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
@@ -16,3 +41,5 @@ print("RECOMMENDATION REASON: TODO")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
+
+
