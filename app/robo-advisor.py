@@ -70,7 +70,32 @@ highest_price = max(high_list)
 lowest_price = min(low_list)
 
 ### recommendation
+# change sp500 and stock 
+# get sp500 for comparison
+spy_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=SPY' + key
+spy_request = requests.get(spy_url)
+spy_response = json.loads(spy_request.text)
+spy_tsd = spy_response['Time Series (Daily)']
 
+#calculate the growth/decline of spy 
+spy_today = float(spy_tsd[dates[0]]['4. close']) 
+spy_yesterday = float(spy_tsd[dates[1]]['4. close'])
+spy_change = (spy_today - spy_yesterday)/spy_yesterday
+
+#daily change of selected stock
+user_choice_today = float(tsd[dates[0]]['4. close'])
+user_choice_yesterday = float(tsd[dates[1]]['4. close'])
+user_choice_change = (user_choice_today - user_choice_yesterday) / user_choice_yesterday 
+#compare spy to change in selected stock and 
+# if change in sp500 is > than change in selected stock sell if greater buy
+
+
+if spy_change > user_choice_change:
+    recommendation = 'Sell'
+    reason = 'did worse than the market'
+else:
+    recommendation = 'Buy'
+    reason = 'did better than the market'
 
 
 print("-------------------------")
@@ -84,8 +109,8 @@ print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(highest_price))}")
 print(f"RECENT LOW: {to_usd(float(lowest_price))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
+print(f"RECOMMENDATION: {recommendation}")
+print(f"RECOMMENDATION REASON: {symbol} {reason}")
 print("-------------------------")
 print('WRTING TO CSV!')
 print("-------------------------")
