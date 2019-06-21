@@ -131,3 +131,10 @@ with open(csv_file_path, "w") as csv_file:
             'recent_low': tsd[date]['3. low'], 
             'close' : tsd[date]['4. close'], 
             'volume': tsd[date]['5. volume']})
+
+
+####visuals
+
+plt.plot(pvt_df)
+plt.show(block=False)
+input('press <ENTER> to continue')
