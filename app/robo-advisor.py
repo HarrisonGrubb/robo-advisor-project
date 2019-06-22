@@ -47,7 +47,7 @@ except:
 
 tsd = parsed_response['Time Series (Daily)']
 dates = list(tsd.keys())
-latest_day = dates[0] # sort list so latest day is first assumes latest day is first...
+latest_day = dates[0] 
 
 last_refreshed = parsed_response['Meta Data']['3. Last Refreshed']
 latest_close = tsd[latest_day]['4. close']
@@ -168,6 +168,17 @@ two_col_df = chart_data.drop(['1. open', '4. close', '5. volume']).T
 two_col_df['2. high'] = pd.to_numeric(two_col_df['2. high'])
 two_col_df['3. low'] = pd.to_numeric(two_col_df['3. low'])
 
-plt.plot(two_col_df)
+two_col_df = two_col_df.iloc[::-1]
+# it was helpful earlier to have in reverse chron order, now we need to undo that otherwise our charts are backwards :)
+
+plt.plot(two_col_df['2. high'], label = '52 week high')
+plt.plot(two_col_df['3. low'], label = '52 week low')
+plt.legend(loc = 'upper left')
 plt.show(block = False)
 input('Press <ENTER> to stop the program')
+
+
+# help
+# re-ordering df 
+#https://stackoverflow.com/questions/20444087/right-way-to-reverse-pandas-dataframe
+#https://stackoverflow.com/questions/19125722/adding-a-legend-to-pyplot-in-matplotlib-in-the-most-simple-manner-possible
