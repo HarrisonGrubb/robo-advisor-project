@@ -1,17 +1,17 @@
 # RoboAdvisor
-___
+
 Connecting to the Alphavantage API and getting daily and weekly time series data on stock market movements
 
 ## System Requirements
-___
+
 * Anaconda 3.7
 * Python 3.7
 * Pip
 * Git
 
 ## Installation
-___
-1.)  You can fork this repo into your own Github account either through the web-based GUI or through GIT commands
+
+1.)  You can fork this repo into your own Github account either through the web-based GUI or through GIT commands.  Ensure that you've downloaded this repo to your local machine.
 
 2.) Navigate to the newly created repository before proceeding with any of the following steps.
     `cd name-of-your-directory`
@@ -26,7 +26,6 @@ ___
 If you've followed along to this point you're good to go run the app.
 
 ## Runing the App
-___
 
 Ensure you're in the main directory of this repository.  
 
