@@ -97,6 +97,32 @@ else:
     recommendation = 'Buy'
     reason = 'did better than the market'
 
+wkly_adj = 'https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol='
+wkly_request_url = wkly_adj + symbol + key
+wk_response = requests.get(wkly_request_url)
+parsed_wk = json.loads(wk_response.text)
+
+wkly_ts = parsed_wk["Weekly Time Series"]
+wk_dates = list(wkly_ts.keys())
+
+wk_high_list = []
+wk_low_list = []
+
+if len(wk_dates) < 52:
+    for date in wk_dates:
+        wk_high_list.append(float(wkly_ts[date]['2. high']))
+        wk_low_list.append(float(wkly_ts[date]['3. low']))
+else:
+    for date in range(0, 53):
+        wk_high_list.append(float(wkly_ts[wk_dates[date]]['2. high']))
+        wk_low_list.append(float(wkly_ts[wk_dates[date]]['3. low']))
+
+
+
+
+
+week52_high = max(wk_high_list)
+week52_low = min(wk_low_list)
 
 print("-------------------------")
 print(f"SELECTED SYMBOL: {symbol}")
@@ -108,6 +134,8 @@ print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(highest_price))}")
 print(f"RECENT LOW: {to_usd(float(lowest_price))}")
+print(f"52 WEEK HIGH: {to_usd(float(week52_high))}")
+print(f"52 WEEK LOW: {to_usd(float(week52_low))}")
 print("-------------------------")
 print(f"RECOMMENDATION: {recommendation}")
 print(f"RECOMMENDATION REASON: {symbol} {reason}")
@@ -135,6 +163,8 @@ with open(csv_file_path, "w") as csv_file:
 
 ####visuals
 
-plt.plot(pvt_df)
-plt.show(block=False)
-input('press <ENTER> to continue')
+
+
+# plt.plot(pvt_df)
+# plt.show(block=False)
+# input('press <ENTER> to continue')
