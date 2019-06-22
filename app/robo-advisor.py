@@ -5,6 +5,7 @@ import json
 import csv 
 import pandas as pd 
 import datetime
+import matplotlib.pyplot as plt
 
 def to_usd(my_price):
     return "(${:,.2f})".format(my_price)
@@ -162,9 +163,11 @@ with open(csv_file_path, "w") as csv_file:
 
 
 ####visuals
+chart_data = pd.DataFrame.from_dict(wkly_ts)
+two_col_df = chart_data.drop(['1. open', '4. close', '5. volume']).T
+two_col_df['2. high'] = pd.to_numeric(two_col_df['2. high'])
+two_col_df['3. low'] = pd.to_numeric(two_col_df['3. low'])
 
-
-
-# plt.plot(pvt_df)
-# plt.show(block=False)
-# input('press <ENTER> to continue')
+plt.plot(two_col_df)
+plt.show(block = False)
+input('Press <ENTER> to stop the program')
