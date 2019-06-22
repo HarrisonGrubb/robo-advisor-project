@@ -35,4 +35,4 @@ Once there you can run the app with following code.
 
 The app will ask you to input a ticker symbol of the stock or ETF of your choice.  
 
-
+This app will print a summary output, and will launch a visualization.  Because of the visualization, you will need to hit the ENTER button when you're ready to stop running the app.  
